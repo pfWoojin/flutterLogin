@@ -1,5 +1,6 @@
-import 'package:qrsystem/model/logintest.dart';
+import 'package:qrsystem/model/user_model.dart';
+import '';
 
 abstract class UserRepository{
-  Future<List<UserLoginTest>> getAllMember();
+  Future<List<UserModel>> getAllMember();
 }

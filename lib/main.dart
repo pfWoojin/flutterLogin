@@ -16,12 +16,13 @@ class StartApp extends StatelessWidget {
         primarySwatch: Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MultiProvider(
-        providers: [
-
-        ],
-      )
-      //LoginPage(),
+      home: LoginPage()
+      // MultiProvider(
+      //   providers: [
+      //     // ChangeNotifierProvider(create: (BuildContext context) => )
+      //   ],
+      // ),
+      // LoginPage()
     );
   }
 }

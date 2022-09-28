@@ -2,7 +2,7 @@
  * 추후 사용할 사용자 정보 모델
  */
 
-class User {
+class UserModel {
   final String userName;
   final String userID;
   final String userPW;
@@ -11,7 +11,7 @@ class User {
   final String accessToken;
   final String gateToken; // == refreshToken
 
-  User(
+  UserModel(
       {required this.userName,
       required this.userID,
       required this.userPW,

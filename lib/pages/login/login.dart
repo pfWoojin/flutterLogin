@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../home/home.dart';
 
 class LoginPage extends StatefulWidget {
@@ -65,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
         child: FittedBox(
           fit: BoxFit.contain,
           child: CircleAvatar(
-            backgroundImage: NetworkImage('https://picsum.photos/200'),
+            // backgroundImage: (Image()),
           ),
         ),
       ),
@@ -134,6 +135,7 @@ class _LoginPageState extends State<LoginPage> {
           onPressed: () {
             // TODO null safety 다시 한번 파악하기
             if (_formKey.currentState!.validate()) {
+              _saveLogin();
               Navigator.push(context,
                 MaterialPageRoute(builder: (context) => Home()),);
             }
@@ -150,4 +152,12 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  void _saveLogin() async {
+    if (_emailController.text.isNotEmpty &&
+        _passwordController.text.isNotEmpty) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('EMAIL', _emailController.text);
+      prefs.setString('PASSWORD', _passwordController.text);
+    }  }
 }
