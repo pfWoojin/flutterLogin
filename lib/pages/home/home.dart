@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:qrsystem/pages/home/qr.dart';
+import 'package:qrsystem/provider/token_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
@@ -18,6 +21,8 @@ class _HomeState extends State<Home> {
   final gateTokenController = TextEditingController();
 
   late SharedPreferences _prefs;
+  late TokenProvider _tokenProvider;
+
   String userID = 'test';
   String userPW = 'test';
   String userEmail = 'test';
@@ -27,11 +32,11 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _loadID();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
           title: Text('테스트!!'),
@@ -44,22 +49,10 @@ class _HomeState extends State<Home> {
               width: 30,
             ),
             _testButton(),
+            _getQRButton(),
             _testList(),
           ],
         ));
-  }
-
-  _loadID() async {
-    _prefs = await SharedPreferences.getInstance();
-    setState(() {
-      try {
-        userID = (_prefs.getStringList('userID')) as String;
-        userPW = (_prefs.getStringList('userPW')) as String;
-        userEmail = (_prefs.getStringList('userEmail')) as String;
-        accessToken = (_prefs.getStringList('accessToken')) as String;
-        gateToken = (_prefs.getStringList('gateToken')) as String;
-      } catch (e) {}
-    });
   }
 
   Widget _testInputForm() {
@@ -91,12 +84,30 @@ class _HomeState extends State<Home> {
     );
   }
 
+  Widget _getQRButton() {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => QRPage()));
+      },
+      child: Icon(Icons.qr_code),
+    );
+  }
+
   void _changeInfo() {
+    _getTokenInfo();
     setState(() {
       userID = userIDController.text.toString();
       userPW = userPWController.text.toString();
       userEmail = userEmailController.text.toString();
     });
+  }
+
+  void _getTokenInfo(){
+    print('프로바이더 테스트!');
+    print(_tokenProvider);
+    _tokenProvider = Provider.of(context, listen: false);
+    _tokenProvider.loadToken();
   }
 
   Widget _testList() {
@@ -110,6 +121,12 @@ class _HomeState extends State<Home> {
         ),
         Row(
           children: <Widget>[Text('userEmail = '), Text(userEmail)],
+        ),
+        Row(
+          children: <Widget>[Text('accessToken = '), Text(accessToken)],
+        ),
+        Row(
+          children: <Widget>[Text('gateToken = '), Text(gateToken)],
         ),
         Row(
           children: <Widget>[Text('phoneNumber = '), Text('Test')],
@@ -150,7 +167,4 @@ class _HomeState extends State<Home> {
       ],
     );
   }
-
-
-
 }

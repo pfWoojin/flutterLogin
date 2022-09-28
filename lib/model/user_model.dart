@@ -1,3 +1,7 @@
+import 'dart:html';
+
+import 'package:flutter/foundation.dart';
+
 /**
  * 추후 사용할 사용자 정보 모델
  */
@@ -19,4 +23,12 @@ class UserModel {
       required this.userNumber,
       required this.accessToken,
       required this.gateToken});
+
+
+  // factory UserModel.fromJson(Map<String, dynamic> parsedJson){
+  //
+  //
+  // }
+
 }
+
