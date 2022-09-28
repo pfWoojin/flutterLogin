@@ -1,0 +1,1 @@
+enum LoginUserType {username, password}

@@ -105,9 +105,9 @@ class _HomeState extends State<Home> {
 
   void _getTokenInfo(){
     print('프로바이더 테스트!');
-    print(_tokenProvider);
     _tokenProvider = Provider.of(context, listen: false);
-    _tokenProvider.loadToken();
+    print('테스트 적용 ${_tokenProvider.loadToken()}');
+    print('dgd ${_tokenProvider.getTokens}');
   }
 
   Widget _testList() {

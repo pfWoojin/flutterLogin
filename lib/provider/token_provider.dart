@@ -7,10 +7,12 @@ import '../repository/token_repository.dart';
 class TokenProvider extends ChangeNotifier {
 
   TokenRepository _tokenRepository = TokenRepository();
-  List<TokenModel> _getTokens = [];
-  List<TokenModel> get getTokens => _getTokens;
+  String _getTokens = '';
+  String get getTokens => _getTokens;
 
   loadToken() async{
-    List<TokenModel>? tokenList = await _tokenRepository.getToken();
+    String gateToken = await _tokenRepository.getGateToken('123');
+    _getTokens = gateToken;
+    notifyListeners();
   }
 }

@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:qrsystem/pages/home/home.dart';
 import 'package:qrsystem/pages/login/login.dart';
 import 'package:provider/provider.dart';
 import 'package:qrsystem/provider/token_provider.dart';
 
-void main() => runApp(const StartApp());
+void main(){
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      systemNavigationBarColor:
+      SystemUiOverlayStyle.dark.systemNavigationBarColor,
+    ),
+  );
+  runApp(const StartApp());
+}
 
 class StartApp extends StatelessWidget {
   const StartApp({Key? key}) : super(key: key);

@@ -1,27 +1,28 @@
 import 'dart:convert';
-
-import 'package:qrsystem/common/constants.dart';
-import 'package:http/http.dart' as http;
-import 'package:qrsystem/model/token_model.dart';
+import 'dart:io';
+import 'package:http/http.dart';
 
 class TokenRepository {
-  var token = Constants.TOKEN_KEY;
+  Future<String> getGateToken(String accessToken) async {
+    final client = Client();
 
-  Future<List<TokenModel>?> getToken() async {
-    // TODO 추후엔 api 호출로 바꿀 것
-    final response = await http.get(Uri.parse(
-        'https://virtserver.swaggerhub.com/HYEONBIN/QR_System/1.0.0/getGateToken'));
-    String accessToken = 'ACCESSTOKEN';
-
-    if (response.statusCode == 200) {
-      print('RESPONSE 성공!!');
-      print(response.body);
-
-      return (jsonDecode(response.body) as List)
-          .map((e) => TokenModel.fromJson(e))
-          .toList();
+    var uri = Uri.parse(
+        'https://virtserver.swaggerhub.com/HYEONBIN/QR_System/1.0.0/getGateToken');
+    final response = await client.post(uri,
+        headers: {HttpHeaders.authorizationHeader: "Bearer ${''}"});
+    if (checkResponse(response)) {
+      final body = jsonDecode(response.body);
+      return body['gateToken'];
     } else {
-      print('RESPONE FAIL');
+      throw Exception("error getting gate Token");
+    }
+  }
+
+  bool checkResponse(final Response response) {
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
